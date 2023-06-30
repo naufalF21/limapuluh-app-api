@@ -11,11 +11,8 @@ export default async function handler(req, res) {
 	// });
 
 	// res.status(200).json(question);
-	return NextCors(
-		req,
-		new Response(JSON.stringify(question), {
-			status: 200,
-			headers: { 'Content-Type': 'application/json' },
-		})
-	);
+	return NextCors(req, res.json(question), {
+		status: 200,
+		headers: { 'Content-Type': 'application/json' },
+	});
 }
