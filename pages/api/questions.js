@@ -3,13 +3,19 @@ import { question } from '@/question';
 import NextCors from 'nextjs-cors';
 
 export default async function handler(req, res) {
+	// await NextCors(req, res, {
+	// 	// options
+	// 	methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+	// 	origin: '*',
+	// 	optionsSuccessStatus: 200,
+	// });
 
-	await NextCors(req, res, {
-		// options
-		methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
-		origin: '*',
-		optionsSuccessStatus: 200,
-	});
-
-	res.status(200).json(question);
+	// res.status(200).json(question);
+	return NextCors(
+		req,
+		new Response(JSON.stringify(question), {
+			status: 200,
+			headers: { 'Content-Type': 'application/json' },
+		})
+	);
 }
