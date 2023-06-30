@@ -1,6 +1,28 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-export default function handler(req, res) {
+import Cors from 'cors';
+
+const cors = Cors({
+	methods: ['POST', 'GET', 'HEAD'],
+});
+
+function runMiddleware(req, res, fn) {
+	return new Promise((resolve, reject) => {
+		fn(req, res, (result) => {
+			if (result instanceof Error) {
+				return reject(result);
+			}
+
+			return resolve(result);
+		});
+	});
+}
+
+export default async function handler(req, res) {
+	// Run the middleware
+	await runMiddleware(req, res, cors);
+
+	// Rest of the API logic
 	res.status(200).json([
 		{
 			id: 1,
